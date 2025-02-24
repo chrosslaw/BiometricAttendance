@@ -11,7 +11,11 @@ fun AppNavigation() {
     val context = LocalContext.current
     NavHost(navController, startDestination = "signup") {
         composable("signup") { SignupScreen(navController) }
-        composable("password") { PasswordSetupScreen(navController, context) }
+        composable("password/{name}/{email}") { backStackEntry ->
+            val name = backStackEntry.arguments?.getString("name") ?: ""
+            val email = backStackEntry.arguments?.getString("email") ?: ""
+            PasswordSetupScreen(navController, context, name, email)
+        }
         composable("login") { LoginScreen(navController) }
         composable("home") { HomeScreen(navController) }
         composable("attendance/{userId}") { backStackEntry ->
