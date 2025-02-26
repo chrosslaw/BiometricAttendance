@@ -2,6 +2,7 @@ package com.example.biometricattendance.data
 
 import androidx.room.*
 
+//DB calls for User
 @Dao
 interface UserDao {
     @Insert
@@ -12,7 +13,4 @@ interface UserDao {
 
     @Update
     suspend fun updateUser(user: User)
-
-    @Delete
-    suspend fun deleteUser(user: User) // Allow deleting users
 }

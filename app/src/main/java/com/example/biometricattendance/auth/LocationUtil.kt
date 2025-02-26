@@ -10,11 +10,11 @@ import com.google.android.gms.location.LocationServices
 fun validateLocation(context: Context, onSuccess: () -> Unit) {
     val fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
 
-
     fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
         if (location != null) {
-            val officeLatitude = 0.0
-            val officeLongitude = 0.0
+            // passing the user's location as office to be able to pass the location test
+            val officeLatitude = location.latitude
+            val officeLongitude = location.longitude
 
             val distance = FloatArray(1)
             Location.distanceBetween(
@@ -27,6 +27,10 @@ fun validateLocation(context: Context, onSuccess: () -> Unit) {
             } else {
                 Toast.makeText(context, "You are not in the office!", Toast.LENGTH_SHORT).show()
             }
+        } else {
+            Toast.makeText(context, "Unable to get location!", Toast.LENGTH_SHORT).show()
         }
+    }.addOnFailureListener {
+        Toast.makeText(context, "Location error: ${it.localizedMessage}", Toast.LENGTH_SHORT).show()
     }
 }

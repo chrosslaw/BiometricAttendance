@@ -4,6 +4,7 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 
+// Attendance Class
 @Entity(
     tableName = "attendance",
     foreignKeys = [ForeignKey(

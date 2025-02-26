@@ -7,6 +7,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 
 @Composable
@@ -49,28 +50,25 @@ fun SignupScreen(navController: NavController) {
         if (emailError.isNotEmpty()) {
             Text(text = emailError, color = MaterialTheme.colorScheme.error)
         }
-
         Spacer(modifier = Modifier.height(20.dp))
-
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceEvenly
-        ) {
-            Button(onClick = { navController.navigate("login") }) {
-                Text("Sign In")
-            }
-
-            Button(
-                onClick = {
-                    if (email.isBlank()) {
-                        emailError = "Email is required"
-                    } else if (emailError.isEmpty()) {
-                        navController.navigate("password/$name/$email")
-                    }
+        Button(
+            onClick = {
+                if (email.isBlank()) {
+                    emailError = "Email is required"
+                } else if (emailError.isEmpty()) {
+                    navController.navigate("password/$name/$email")
                 }
-            ) {
-                Text("Sign Up")
             }
+        ) {
+            Text("Sign Up")
         }
+        Spacer(modifier = Modifier.height(20.dp))
+        Text("or",fontSize = 20.sp)
+        Spacer(modifier = Modifier.height(20.dp))
+        Button(onClick = { navController.navigate("login") }) {
+            Text("Sign In Here")
+        }
+
+
     }
 }

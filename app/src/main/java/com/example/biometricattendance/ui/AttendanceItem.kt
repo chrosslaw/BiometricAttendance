@@ -7,6 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.biometricattendance.data.Attendance
 
+
 @Composable
 fun AttendanceItem(attendance: Attendance) {
     Card(
