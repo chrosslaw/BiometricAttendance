@@ -4,10 +4,11 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.location.Location
 import android.widget.Toast
+import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 
 @SuppressLint("MissingPermission")
-fun validateLocation(context: Context, onSuccess: () -> Unit) {
+fun validateLocation(context: Context, fusedLocationClient: FusedLocationProviderClient, onSuccess: () -> Unit, onFailure: () -> Unit) {
     val fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
 
     fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
