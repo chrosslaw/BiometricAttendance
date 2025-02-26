@@ -21,6 +21,7 @@ fun Header() {
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        // Simple Global Header
     Text(
         "Biometric Attendance",
         fontSize = 28.sp,

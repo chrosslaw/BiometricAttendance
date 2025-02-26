@@ -2,7 +2,7 @@ package com.example.biometricattendance.data
 
 import androidx.room.*
 
-//DB calls for User
+// DB calls for User
 @Dao
 interface UserDao {
     @Insert

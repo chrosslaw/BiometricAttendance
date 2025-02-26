@@ -29,6 +29,13 @@ fun LoginScreen(navController: NavController) {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        Spacer(modifier = Modifier.height(20.dp))
+        // Page level header.
+        Text("Please Enter Your Credentials",
+            style = MaterialTheme.typography.headlineSmall
+        )
+        Spacer(modifier = Modifier.height(16.dp))
+        // User Input Fields
         OutlinedTextField(
             value = email,
             onValueChange = { email = it },
@@ -44,7 +51,6 @@ fun LoginScreen(navController: NavController) {
         if (errorMessage.isNotEmpty()) {
             Text(text = errorMessage, color = Color.Red, fontSize = 12.sp)
         }
-
         Spacer(modifier = Modifier.height(20.dp))
 
         Button(
@@ -53,12 +59,12 @@ fun LoginScreen(navController: NavController) {
                     errorMessage = "Email and Password cannot be empty"
                     return@Button
                 }
-
+                // Database call to get user
                 CoroutineScope(Dispatchers.IO).launch {
                     try {
                         val db = AppDatabase.getDatabase(context).userDao()
                         val user = db.getUserByEmail(email)
-
+                        // Go to home page or get an error based on DB call
                         withContext(Dispatchers.Main) {
                             if (user != null && user.password == password) {
                                 navController.navigate("home/$email")

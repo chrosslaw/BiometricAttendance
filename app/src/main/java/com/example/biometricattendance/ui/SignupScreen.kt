@@ -3,6 +3,7 @@ package com.example.biometricattendance.ui
 import android.util.Patterns
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -21,18 +22,17 @@ fun SignupScreen(navController: NavController) {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        // Page header
         Text(text = "Welcome!", style = MaterialTheme.typography.headlineMedium)
-
         Spacer(modifier = Modifier.height(20.dp))
-
+        // User input - name
         OutlinedTextField(
             value = name,
             onValueChange = { name = it },
             label = { Text("Enter Name") }
         )
-
         Spacer(modifier = Modifier.height(10.dp))
-
+        // User input - email
         OutlinedTextField(
             value = email,
             onValueChange = {
@@ -51,6 +51,7 @@ fun SignupScreen(navController: NavController) {
             Text(text = emailError, color = MaterialTheme.colorScheme.error)
         }
         Spacer(modifier = Modifier.height(20.dp))
+        // Sign in and sign up buttons
         Button(
             onClick = {
                 if (email.isBlank()) {
@@ -68,7 +69,5 @@ fun SignupScreen(navController: NavController) {
         Button(onClick = { navController.navigate("login") }) {
             Text("Sign In Here")
         }
-
-
     }
 }

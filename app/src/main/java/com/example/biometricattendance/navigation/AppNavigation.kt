@@ -10,7 +10,7 @@ import com.example.biometricattendance.ui.*
 @Composable
 fun AppNavigation(activity: AppCompatActivity) {
     val navController = rememberNavController()
-
+    // Each composable directs to a new screen
     NavHost(navController, startDestination = "signup") {
         composable("signup") { SignupScreen(navController) }
         composable("password/{name}/{email}") { backStackEntry ->

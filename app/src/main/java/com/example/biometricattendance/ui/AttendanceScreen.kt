@@ -12,6 +12,9 @@ import androidx.navigation.NavController
 import com.example.biometricattendance.data.Attendance
 import com.example.biometricattendance.data.User
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.sp
 import com.example.biometricattendance.data.AppDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -53,47 +56,44 @@ fun AttendanceScreen(
         }
     }
 
-    Scaffold(
-        topBar = {
-            Text("Attendance History")
-        }
-    ) { paddingValues ->
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues)
-                .padding(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp).padding(top=50.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
         ) {
+        Text("Attendance History",
+            fontSize = 18.sp,
+            textAlign = TextAlign.Center,
+            modifier = Modifier.padding(8.dp).padding(top=35.dp))
 
+        Spacer(modifier = Modifier.height(16.dp))
 
-            Spacer(modifier = Modifier.height(16.dp))
+        // Display today's attendance status, if available
+        if (todaysAttendance != null) {
+            Text(
+                text = "Today's Attendance:\n" +
+                        "Check-In: ${todaysAttendance?.checkInTime ?: "Not Checked In"}\n" +
+                        "Check-Out: ${todaysAttendance?.checkOutTime ?: "Not Checked Out"}",
+                style = MaterialTheme.typography.bodyLarge
+            )
+        } else {
+            Text("No attendance record for today", style = MaterialTheme.typography.bodyLarge)
+        }
 
-            // Display today's attendance status, if available
-            if (todaysAttendance != null) {
-                Text(
-                    text = "Today's Attendance:\n" +
-                            "Check-In: ${todaysAttendance?.checkInTime ?: "Not Checked In"}\n" +
-                            "Check-Out: ${todaysAttendance?.checkOutTime ?: "Not Checked Out"}",
-                    style = MaterialTheme.typography.bodyLarge
-                )
-            } else {
-                Text("No attendance record for today", style = MaterialTheme.typography.bodyLarge)
+        Spacer(modifier = Modifier.height(16.dp))
+
+        // Display the attendance history using a LazyColumn
+        LazyColumn {
+            items(attendanceRecords) { attendance ->
+                AttendanceItem(attendance = attendance)
             }
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            // Display the attendance history using a LazyColumn
-            LazyColumn {
-                items(attendanceRecords) { attendance ->
-                    AttendanceItem(attendance = attendance)
-                }
-            }
+        }
 
         }
         Column(
-                modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Bottom
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.Bottom
         ) {
             // A button to navigate back to Home
             Button(
@@ -105,5 +105,5 @@ fun AttendanceScreen(
                 Text("Home")
             }
         }
-    }
+
 }

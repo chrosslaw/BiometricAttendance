@@ -10,6 +10,7 @@ import com.example.biometricattendance.data.Attendance
 
 @Composable
 fun AttendanceItem(attendance: Attendance) {
+    // UI for each daily entry
     Card(
         modifier = Modifier
             .fillMaxWidth()

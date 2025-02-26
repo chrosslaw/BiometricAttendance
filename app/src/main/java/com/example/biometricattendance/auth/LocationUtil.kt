@@ -9,15 +9,17 @@ import com.google.android.gms.location.LocationServices
 
 @SuppressLint("MissingPermission")
 fun validateLocation(context: Context, fusedLocationClient: FusedLocationProviderClient, onSuccess: () -> Unit, onFailure: () -> Unit) {
+    // location services
     val fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
-
     fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
         if (location != null) {
             // passing the user's location as office to be able to pass the location test
+            // These would be set by the meeting holder.
             val officeLatitude = location.latitude
             val officeLongitude = location.longitude
-
+            // init distance from office
             val distance = FloatArray(1)
+            // find the distance between the office location and users current location
             Location.distanceBetween(
                 location.latitude, location.longitude,
                 officeLatitude, officeLongitude, distance

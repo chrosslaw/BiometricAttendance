@@ -29,18 +29,27 @@ fun PasswordSetupScreen(navController: NavController, name: String, email: Strin
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        Spacer(modifier = Modifier.height(20.dp))
+        // Page Header
+        Text("Choose a Password.",
+            style = MaterialTheme.typography.headlineSmall
+        )
+        Spacer(modifier = Modifier.height(16.dp))
         OutlinedTextField(value = password, onValueChange = { password = it }, label = { Text("Enter Password") })
         OutlinedTextField(value = confirmPassword, onValueChange = { confirmPassword = it }, label = { Text("Confirm Password") })
         Spacer(modifier = Modifier.height(20.dp))
-
+        // Password create
         Button(onClick = {
+            // PW can't be blank
             if (password.isBlank()) {
                 errorMessage = "Password cannot be empty"
                 return@Button
             }
             when {
+                // passwords must match
                 password.isEmpty() || confirmPassword.isEmpty() -> errorMessage = "Password fields cannot be empty"
                 password != confirmPassword -> errorMessage = "Passwords do not match"
+                // enter user, email, and password into db
                 else ->  CoroutineScope(Dispatchers.IO).launch {
                     try {
                         val db = AppDatabase.getDatabase(context).userDao()

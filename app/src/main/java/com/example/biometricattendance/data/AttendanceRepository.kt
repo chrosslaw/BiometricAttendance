@@ -15,9 +15,10 @@ fun saveAttendance(userId: Int, type: String, context: Context) {
 
     val currentTime = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(Date())
     val currentDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
-
+    // insert today's attendance record
     CoroutineScope(Dispatchers.IO).launch {
         val record = db.getTodaysAttendance(userId, currentDate)
+        // create a record with only checkin time with today's datetime
         if (type == "checkin" && record == null) {
             val newAttendance = Attendance(
                 userId = userId,
@@ -27,6 +28,7 @@ fun saveAttendance(userId: Int, type: String, context: Context) {
             )
             db.insertAttendance(newAttendance)
         }
+        // update today's record with today's datetime
         else if (type == "checkout" && record?.checkOutTime ==  null) {
                 val updatedAttendance = record?.copy(
                     checkInTime = record.checkInTime,
@@ -36,8 +38,7 @@ fun saveAttendance(userId: Int, type: String, context: Context) {
                     db.updateAttendance(updatedAttendance)
                 }
             }
-
-
+        // inform the user their record has been updated
         CoroutineScope(Dispatchers.Main).launch {
             Log.d("Attendance", "$type recorded at $currentTime")
             Toast.makeText(context, "$type Successful!", Toast.LENGTH_SHORT).show()
